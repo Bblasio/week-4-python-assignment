@@ -1,0 +1,49 @@
+1: def read_and_modify_file(input_filename, output_filename):
+2:     try:
+3:         # Read the input file
+4:         with open(input_filename, 'r') as infile:
+5:             lines = infile.readlines()
+6:         
+7:         # Modify content: Add line numbers
+8:         modified_lines = [f"{i+1}: {line}" for i, line in enumerate(lines)]
+9:         
+10:         # Write to output file
+11:         with open(output_filename, 'w') as outfile:
+12:             outfile.writelines(modified_lines)
+13:         
+14:         print(f"Success! Modified file written to {output_filename}")
+15:         return True
+16:     
+17:     except FileNotFoundError:
+18:         print(f"Error: The file '{input_filename}' was not found.")
+19:         return False
+20:     except PermissionError:
+21:         print(f"Error: Permission denied when accessing '{input_filename}' or writing to '{output_filename}'.")
+22:         return False
+23:     except IOError as e:
+24:         print(f"Error: An I/O error occurred: {e}")
+25:         return False
+26:     except Exception as e:
+27:         print(f"Unexpected error: {e}")
+28:         return False
+29: 
+30: def main():
+31:     while True:
+32:         # Prompt user for input file name
+33:         input_filename = input("Enter the input file name (e.g., input.txt): ").strip()
+34:         
+35:         # Define output file name
+36:         output_filename = "output_modified.txt"
+37:         
+38:         # Attempt to process the file
+39:         if read_and_modify_file(input_filename, output_filename):
+40:             break  # Exit loop on success
+41:         
+42:         # Ask if user wants to retry
+43:         retry = input("Do you want to try another file? (yes/no): ").strip().lower()
+44:         if retry != 'yes':
+45:             print("Exiting program.")
+46:             break
+47: 
+48: if __name__ == "__main__":
+49:     main()
